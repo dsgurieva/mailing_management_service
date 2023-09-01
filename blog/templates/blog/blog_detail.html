@@ -1,0 +1,26 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card_title">
+                        Материал "{{object.heading}}"
+                    </h3>
+                    <div class="card-body">
+                        <p>
+                            {{ object.content_article }}
+                        </p>
+                    </div>
+                    <div class="card_footer">
+                        Просмотры: {{ object.view_count }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
