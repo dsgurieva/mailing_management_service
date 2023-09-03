@@ -1,0 +1,24 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card_title">
+                        Рассылка "{{object.letter_subject}}"
+                    </h3>
+                    <div class="card-body">
+                        <p>
+                            {{ object.letter_body }}
+                        </p>
+                    </div>
+                    <div class="card_footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
