@@ -3,21 +3,26 @@ from mailing.models import MailingSettings, MessageSend, Client
 
 
 class MailingSettingsForm(forms.ModelForm):
-
     class Meta:
         model = MailingSettings
-        exclude = ('client',)
+        fields = '__all__'
+        #exclude = ('client',)
 
 
 class MessageSendForm(forms.ModelForm):
-
     class Meta:
         model = MessageSend
-        exclude = '__all__'
+        #fields = '__all__'
+        exclude = ('user',)
 
 
 class ClientSettingsForm(forms.ModelForm):
-
     class Meta:
         model = Client
-        exclude = '__all__'
+        fields = '__all__'
+
+
+class MailingSettingsManagerForm(forms.ModelForm):
+    class Meta:
+        model = MailingSettings
+        fields = ('status',)

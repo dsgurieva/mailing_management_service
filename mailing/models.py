@@ -1,10 +1,14 @@
 from django.db import models
+from django.conf import settings
 
 
 class Client(models.Model):
     email = models.CharField(max_length=150, verbose_name='email')
     full_name = models.CharField(max_length=200, verbose_name='ФИО')
     comment = models.TextField(verbose_name='комментарий', null=True, blank=True)
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                              verbose_name='пользователь')
 
 
     def __str__(self):
@@ -39,11 +43,13 @@ class MailingSettings(models.Model):
         (STATUS_DONE, 'Завершена'),
     )
 
-
     time = models.TimeField(verbose_name='время рассылки')
     period = models.CharField(max_length=20, choices=PERIODS, verbose_name='переодичность рассылки')
     status = models.CharField(max_length=20, choices=STATUSES, verbose_name='статус рассылки')
     client = models.ManyToManyField(Client, verbose_name='клиент')
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                             verbose_name='пользователь')
 
 
 class Meta:
@@ -55,6 +61,9 @@ class MessageSend(models.Model):
     letter_subject = models.CharField(max_length=150, verbose_name='тема письма')
     letter_body = models.TextField(verbose_name='тело письма')
     mailing = models.OneToOneField(MailingSettings, on_delete=models.CASCADE, verbose_name='рассылка')
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                             verbose_name='пользователь')
 
 
     class Meta:
@@ -75,6 +84,9 @@ class MailingLogs(models.Model):
     status = models.CharField(max_length=20, choices=STATUSES, verbose_name='статус попытки')
     client = models.OneToOneField(Client, on_delete=models.CASCADE, verbose_name='клиент')
     mailing = models.OneToOneField(MailingSettings, on_delete=models.CASCADE, verbose_name='рассылка')
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                             verbose_name='пользователь')
 
 
     class Meta:

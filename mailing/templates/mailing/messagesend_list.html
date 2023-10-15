@@ -4,26 +4,24 @@
   <main>
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
       <div class="col-md-5 p-lg-5 mx-auto my-5">
-        <h1 class="display-4 fw-normal">Client</h1>
+        <h1 class="display-4 fw-normal">Mailing</h1>
         <p class="lead fw-normal">Привет! Это сервис по созданию и управлению рекламными рассылками, чтобы добавить клиентов кликай по кнопке ниже.</p>
-        <a class="btn btn-outline-secondary" href="{% url 'mailing:client_mailing' %}">Добавить клиента</a>
+        <a class="btn btn-outline-secondary" href="{% url 'mailing:create_message' %}">Добавить письмо</a>
   <main>
 
     {% for object in object_list %}
         <div class="col-md-4">
             <div class="card mb-4 box-shadow">
                  <p class="card-text">
-                     Клиент
-                     '{{ object.full_name}}'
+                      Message
+                     '{{ object.letter_subject}}'
                  </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{% url 'mailing:detail_client' object.pk %}"
+                            <a href="{% url 'mailing:detail_message' object.pk %}"
                                 class="btn btn-sm btn-outline-secondary">Просмотреть</a>
-                            <a href="{% url 'mailing:update_client' object.pk %}"
+                            <a href="{% url 'mailing:update_message' object.pk %}"
                                class="btn btn-sm btn-outline-secondary">Редактировать</a>
-                            <a href="{% url 'mailing:delete_client' object.pk %}"
-                                class="btn btn-sm btn-outline-secondary">Удалить</a>
                         </div>
                     </div>
                 </div>
