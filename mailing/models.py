@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.conf import settings
 
@@ -43,7 +44,10 @@ class MailingSettings(models.Model):
         (STATUS_DONE, 'Завершена'),
     )
 
-    time = models.TimeField(verbose_name='время рассылки')
+    start_time = models.DateTimeField(verbose_name='Время старта', null=True, blank=True,
+                                      default=datetime.datetime.now(datetime.timezone.utc))
+    end_time = models.DateTimeField(verbose_name='Время окончания', null=True, blank=True,
+                                    default=datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=7))
     period = models.CharField(max_length=20, choices=PERIODS, verbose_name='переодичность рассылки')
     status = models.CharField(max_length=20, choices=STATUSES, verbose_name='статус рассылки')
     client = models.ManyToManyField(Client, verbose_name='клиент')
@@ -93,3 +97,15 @@ class MailingLogs(models.Model):
             verbose_name = 'лог рассылки'
             verbose_name_plural = 'логи рассылки'
 
+class MailingClient(models.Model):
+    client = models.ForeignKey('Client', on_delete=models.CASCADE, verbose_name='клиент')
+    mailing = models.ForeignKey('MailingSettings', on_delete=models.CASCADE, verbose_name='рассылка')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True,
+                              verbose_name='Пользователь')
+
+    def __str__(self):
+        return f'{self.client} - {self.mailing}'
+
+    class Meta:
+        verbose_name = 'Список рассылок'
+        verbose_name_plural = 'Списки рассылок'

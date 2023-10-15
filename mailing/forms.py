@@ -5,14 +5,13 @@ from mailing.models import MailingSettings, MessageSend, Client
 class MailingSettingsForm(forms.ModelForm):
     class Meta:
         model = MailingSettings
-        fields = '__all__'
-        #exclude = ('client',)
+        exclude = ('user',)
+
 
 
 class MessageSendForm(forms.ModelForm):
     class Meta:
         model = MessageSend
-        #fields = '__all__'
         exclude = ('user',)
 
 
